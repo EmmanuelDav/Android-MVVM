@@ -18,11 +18,12 @@ Also this repo shows how to setup a project as per T9L Guidelines
 3. Make a pull request to original repo
 
 [Keep your fork synced](https://help.github.com/articles/fork-a-repo/#keep-your-fork-synced)
+
 [Creating a pull request](https://help.github.com/articles/creating-a-pull-request/)
 
 ## Architecture Components - MVVM:
 
-![MVVM Architecture](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png "MVVM architecture diagram")
+![MVVM Architecture](https://github.com/punit9l/Android-MVVM/blob/master/images/mvvm.png "MVVM architecture diagram")
 
 
 [What is MVVM?](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)

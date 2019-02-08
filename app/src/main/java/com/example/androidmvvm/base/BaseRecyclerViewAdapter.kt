@@ -18,4 +18,12 @@ abstract class BaseRecyclerViewAdapter<T, V : RecyclerView.ViewHolder>(
         this.mList = mList
         notifyDataSetChanged()
     }
+
+    fun getItem(pos: Int): T? {
+        if (mList != null) {
+            return mList!!.getOrNull(pos)
+        }
+        throw NullPointerException();
+
+    }
 }

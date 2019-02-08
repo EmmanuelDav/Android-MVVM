@@ -3,13 +3,15 @@ package com.example.androidmvvm.ui.posts
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import com.example.androidmvvm.R
 import com.example.androidmvvm.base.BaseRecyclerViewAdapter
 import com.example.androidmvvm.databinding.ItemPostBinding
 import com.example.androidmvvm.model.Post
 
-class PostListAdapter(postList: List<Post>) :
+class PostListAdapter(postList: List<Post>, val itemClickListener: View.OnClickListener) :
     BaseRecyclerViewAdapter<Post, PostListAdapter.ViewHolder>(postList) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,6 +22,8 @@ class PostListAdapter(postList: List<Post>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(mList?.get(position)!!)
+        holder.itemView.tag = position
+        holder.itemView.setOnClickListener(itemClickListener)
     }
 
     class ViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -29,5 +33,6 @@ class PostListAdapter(postList: List<Post>) :
             viewModel.bind(post)
             binding.viewModel = viewModel
         }
+
     }
 }

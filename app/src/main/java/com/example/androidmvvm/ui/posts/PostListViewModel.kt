@@ -20,12 +20,19 @@ class PostListViewModel(application: Application) : BaseViewModel(application) {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val buttonVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val postListAdapter: PostListAdapter = PostListAdapter(ArrayList())
+    val selectedPost: MutableLiveData<Post> = MutableLiveData()
+
 
     val errorClickListener = View.OnClickListener {
         loadPosts()
         buttonVisibility.value = View.GONE
     }
+
+    private val listItemClickListener = View.OnClickListener {
+        val position = it.tag as Int
+        selectedPost.value = postListAdapter.getItem(position)
+    }
+    val postListAdapter: PostListAdapter = PostListAdapter(ArrayList(), listItemClickListener)
 
 
     private fun loadPosts() {
@@ -67,7 +74,7 @@ class PostListViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun onPostsSuccess(postList: List<Post>) {
-        postsRepository.storePostInDb(postList)
+        //postsRepository.storePostInDb(postList)
         postListAdapter.setData(postList)
 
     }
@@ -82,7 +89,9 @@ class PostListViewModel(application: Application) : BaseViewModel(application) {
 
     override fun onCleared() {
         super.onCleared()
-        networkSubscription.dispose()
-        dbSubscription.dispose()
+        if (::networkSubscription.isInitialized)
+            networkSubscription.dispose()
+        if (::dbSubscription.isInitialized)
+            dbSubscription.dispose()
     }
 }

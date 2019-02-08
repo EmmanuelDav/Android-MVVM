@@ -8,4 +8,7 @@
 
     <string name="retry">Retry</string>
     <string name="post_error">An error occurred while loading the posts</string>
+    <string name="import_">Import</string>
+    <string name="gallery">Gallery</string>
+    <string name="slideshow">Slideshow</string>
 </resources>

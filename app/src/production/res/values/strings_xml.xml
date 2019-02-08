@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android MVVM</string>
+
+    <string name="base_url">https://jsonplaceholder.typicode.com/</string>
+</resources>

@@ -20,7 +20,7 @@ class PostListViewModel(application: Application) : BaseViewModel(application) {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val buttonVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val selectedPost: MutableLiveData<Post> = MutableLiveData()
+    val postList: MutableLiveData<List<Post>> = MutableLiveData()
 
 
     val errorClickListener = View.OnClickListener {
@@ -28,11 +28,8 @@ class PostListViewModel(application: Application) : BaseViewModel(application) {
         buttonVisibility.value = View.GONE
     }
 
-    private val listItemClickListener = View.OnClickListener {
-        val position = it.tag as Int
-        selectedPost.value = postListAdapter.getItem(position)
-    }
-    val postListAdapter: PostListAdapter = PostListAdapter(ArrayList(), listItemClickListener)
+
+    lateinit var postListAdapter: PostListAdapter
 
 
     private fun loadPosts() {
@@ -75,12 +72,14 @@ class PostListViewModel(application: Application) : BaseViewModel(application) {
 
     private fun onPostsSuccess(postList: List<Post>) {
         //postsRepository.storePostInDb(postList)
-        postListAdapter.setData(postList)
+        //postListAdapter.setData(postList)
+        this.postList.value = postList
 
     }
 
     private fun onPostsFetchedFromDb(postList: List<Post>) {
-        postListAdapter.setData(postList)
+        //postListAdapter.setData(postList)
+        this.postList.value = postList
     }
 
     private fun onErrorFetchingFromDb() {

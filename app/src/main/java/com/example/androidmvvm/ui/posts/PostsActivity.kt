@@ -2,7 +2,6 @@ package com.example.androidmvvm.ui.posts
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.annotation.StringRes
@@ -12,8 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.example.androidmvvm.R
 import com.example.androidmvvm.databinding.ActivityPostsBinding
-import com.example.androidmvvm.ui.postDetail.PostDetailActivity
-import com.example.androidmvvm.utils.INTENT_EXTRA_POST
+import com.example.androidmvvm.ui.posts.adapters.PostListAdapter
 import com.example.androidmvvm.utils.ViewModelFactory
 
 class PostsActivity : AppCompatActivity(), View.OnClickListener {
@@ -22,11 +20,11 @@ class PostsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityPostsBinding
     private lateinit var viewModel: PostListViewModel
     private var errorSnackbar: Snackbar? = null
-    private var adapter: PostListAdapter = PostListAdapter(ArrayList(), this)
+    private var adapter: PostListAdapter =
+        PostListAdapter(ArrayList(), this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //Injector.appComponent.inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_posts)
         binding.postList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(PostListViewModel::class.java)
@@ -47,9 +45,9 @@ class PostsActivity : AppCompatActivity(), View.OnClickListener {
         v.let {
             val position = v?.tag as Int
             val selectedPost = adapter.getItem(position)
-            val intent = Intent(this, PostDetailActivity::class.java)
-            intent.putExtra(INTENT_EXTRA_POST, selectedPost)
-            startActivity(intent)
+            selectedPost.let {
+                PostsNavigator.startPostDetailActivity(this, selectedPost!!)
+            }
         }
 
     }

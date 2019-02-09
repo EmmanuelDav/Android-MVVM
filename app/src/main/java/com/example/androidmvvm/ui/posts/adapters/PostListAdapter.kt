@@ -1,15 +1,15 @@
-package com.example.androidmvvm.ui.posts
+package com.example.androidmvvm.ui.posts.adapters
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import com.example.androidmvvm.R
 import com.example.androidmvvm.base.BaseRecyclerViewAdapter
 import com.example.androidmvvm.databinding.ItemPostBinding
 import com.example.androidmvvm.model.Post
+import com.example.androidmvvm.ui.posts.PostViewModel
 
 class PostListAdapter(postList: List<Post>, val itemClickListener: View.OnClickListener) :
     BaseRecyclerViewAdapter<Post, PostListAdapter.ViewHolder>(postList) {

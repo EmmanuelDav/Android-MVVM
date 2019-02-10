@@ -7,9 +7,9 @@ import retrofit2.http.Path
 
 interface PostsApi {
 
-    @GET("/posts")
-    fun getPosts(): Observable<List<Post>>
+  @GET("/posts")
+  fun getPosts(): Observable<List<Post>>
 
-    @GET("/posts/{id}")
-    fun  getPostDetail(@Path("id") id :Int):Observable<Post>
+  @GET("/posts/{id}")
+  fun getPostDetail(@Path("id") id: Int): Observable<Post>
 }

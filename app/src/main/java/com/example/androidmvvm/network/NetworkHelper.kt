@@ -11,50 +11,50 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 class NetworkHelper private constructor(application: Application) {
-    val postsApi: PostsApi
+  val postsApi: PostsApi
 
-    init {
-
-
-        //        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        //        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        val cacheSize = 10 * 1024 * 1024 // 10 MiB
-        val cache = Cache(application.cacheDir, cacheSize.toLong())
-
-        val client = OkHttpClient.Builder().cache(cache)
-            .writeTimeout(2, TimeUnit.MINUTES)
-            .readTimeout(2, TimeUnit.MINUTES)
-            .connectTimeout(2, TimeUnit.MINUTES)
-            //                .addInterceptor(new HeaderInterceptor(application.getApplicationContext()))
-            //                .addNetworkInterceptor(new com.facebook.stetho.okhttp3.StethoInterceptor())
-            //                .addInterceptor(logging)
-            .retryOnConnectionFailure(true)
-            .build()
+  init {
 
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(application.getString(R.string.base_url))
-            .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .client(client)
-            .build()
+    //        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+    //        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        postsApi = retrofit.create(PostsApi::class.java)
-    }
+    val cacheSize = 10 * 1024 * 1024 // 10 MiB
+    val cache = Cache(application.cacheDir, cacheSize.toLong())
 
-    companion object {
+    val client = OkHttpClient.Builder().cache(cache)
+        .writeTimeout(2, TimeUnit.MINUTES)
+        .readTimeout(2, TimeUnit.MINUTES)
+        .connectTimeout(2, TimeUnit.MINUTES)
+        //                .addInterceptor(new HeaderInterceptor(application.getApplicationContext()))
+        //                .addNetworkInterceptor(new com.facebook.stetho.okhttp3.StethoInterceptor())
+        //                .addInterceptor(logging)
+        .retryOnConnectionFailure(true)
+        .build()
 
-        private var networkHelper: NetworkHelper? = null
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl(application.getString(R.string.base_url))
+        .addConverterFactory(MoshiConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+        .client(client)
+        .build()
+
+    postsApi = retrofit.create(PostsApi::class.java)
+  }
+
+  companion object {
+
+    private var networkHelper: NetworkHelper? = null
 
 
-        fun getInstance(application: Application): NetworkHelper? {
-            if (networkHelper == null) {
-                synchronized(NetworkHelper::class.java) {
-                    networkHelper = NetworkHelper(application)
-                }
-            }
-            return networkHelper
+    fun getInstance(application: Application): NetworkHelper? {
+      if (networkHelper == null) {
+        synchronized(NetworkHelper::class.java) {
+          networkHelper = NetworkHelper(application)
         }
+      }
+      return networkHelper
     }
+  }
 }

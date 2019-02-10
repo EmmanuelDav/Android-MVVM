@@ -6,5 +6,5 @@ import com.example.androidmvvm.model.Post
 
 @Database(entities = [Post::class], version = 1)
 abstract class PostsDb : RoomDatabase() {
-    abstract fun postDao(): PostsDao
+  abstract fun postDao(): PostsDao
 }

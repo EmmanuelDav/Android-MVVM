@@ -12,18 +12,19 @@ import com.example.androidmvvm.utils.ViewModelFactory
 
 class PostDetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPostDetailBinding
-    private lateinit var viewModel: PostDetailViewModel
+  private lateinit var binding: ActivityPostDetailBinding
+  private lateinit var viewModel: PostDetailViewModel
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_post_detail)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(PostDetailViewModel::class.java)
-        binding.viewModel = viewModel
-        val post = intent.getParcelableExtra<Post>(INTENT_EXTRA_POST)
-        viewModel.post.value = post;
-        viewModel.loadPostDetail()
-    }
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_post_detail)
+    viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(
+        PostDetailViewModel::class.java)
+    binding.viewModel = viewModel
+    val post = intent.getParcelableExtra<Post>(INTENT_EXTRA_POST)
+    viewModel.post.value = post;
+    viewModel.loadPostDetail()
+  }
 }

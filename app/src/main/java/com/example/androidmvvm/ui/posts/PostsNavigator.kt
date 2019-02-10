@@ -7,12 +7,12 @@ import com.example.androidmvvm.utils.INTENT_EXTRA_POST
 
 class PostsNavigator {
 
-    companion object {
-        fun startPostDetailActivity(activity: PostsActivity, selectedPost: Post) {
-            val intent = Intent(activity, PostDetailActivity::class.java)
-            intent.putExtra(INTENT_EXTRA_POST, selectedPost)
-            activity.startActivity(intent)
-        }
+  companion object {
+    fun startPostDetailActivity(activity: PostsActivity, selectedPost: Post) {
+      val intent = Intent(activity, PostDetailActivity::class.java)
+      intent.putExtra(INTENT_EXTRA_POST, selectedPost)
+      activity.startActivity(intent)
     }
+  }
 
 }

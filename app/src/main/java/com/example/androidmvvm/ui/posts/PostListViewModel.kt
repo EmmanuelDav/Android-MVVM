@@ -6,7 +6,6 @@ import android.view.View
 import com.example.androidmvvm.R
 import com.example.androidmvvm.base.BaseViewModel
 import com.example.androidmvvm.model.Post
-import com.example.androidmvvm.ui.posts.adapters.PostListAdapter
 import com.example.androidmvvm.ui.posts.repository.PostsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -29,9 +28,6 @@ class PostListViewModel(application: Application) : BaseViewModel(application) {
     loadPosts()
     buttonVisibility.value = View.GONE
   }
-
-
-  lateinit var postListAdapter: PostListAdapter
 
 
   private fun loadPosts() {

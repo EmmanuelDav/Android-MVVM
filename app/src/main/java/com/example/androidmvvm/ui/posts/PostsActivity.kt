@@ -28,26 +28,27 @@ class PostsActivity : AppCompatActivity(), View.OnClickListener {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_posts)
     binding.postList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(
-        PostListViewModel::class.java)
-    viewModel.postListAdapter = adapter
+        PostListViewModel::class.java
+    )
+    binding.postList.adapter = adapter
     viewModel.errorMessage.observe(this, Observer { errorMessage ->
       if (errorMessage != null) showError(errorMessage) else hideError()
     })
     binding.viewModel = viewModel
 
     viewModel.postList.observe(this, Observer { list ->
-      list.let {
-        adapter.setData(list!!)
+      list?.let {
+        adapter.setData(it)
       }
     })
   }
 
   override fun onClick(v: View?) {
-    v.let {
-      val position = v?.tag as Int
+    v?.let {
+      val position = it.tag as Int
       val selectedPost = adapter.getItem(position)
-      selectedPost.let {
-        PostsNavigator.startPostDetailActivity(this, selectedPost!!)
+      selectedPost?.let { post ->
+        PostsNavigator.startPostDetailActivity(this, post)
       }
     }
 

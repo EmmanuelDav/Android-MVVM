@@ -12,94 +12,83 @@ import io.reactivex.schedulers.Schedulers
 
 class PostDetailViewModel(application: Application) : AndroidViewModel(application) {
 
-  private val postTitle = MutableLiveData<String>()
-  private val postBody = MutableLiveData<String>()
-  private var postDetailRepository: PostDetailRepository =
-      PostDetailRepository(application)
+    val postTitle = MutableLiveData<String>()
+    val postBody = MutableLiveData<String>()
+    private var postDetailRepository: PostDetailRepository =
+        PostDetailRepository(application)
 
-  private lateinit var networkSubscription: Disposable
-  private lateinit var dbSubscription: Disposable
-  val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-  val post: MutableLiveData<Post> = MutableLiveData()
+    private lateinit var networkSubscription: Disposable
+    private lateinit var dbSubscription: Disposable
+    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val post: MutableLiveData<Post> = MutableLiveData()
 
-
-  fun loadPostDetail() {
-    if (post.value != null) {
-      networkSubscription = postDetailRepository.getPostDetailFromApi(post.value!!.id).subscribeOn(
-          Schedulers.io()
-      )
-          .observeOn(AndroidSchedulers.mainThread())
-          .doOnSubscribe { showLoading() }
-          .doOnTerminate { hideLoading() }
-          .subscribe(
-              { postDetail -> onPostDetailSuccess(postDetail) },
-              { onPostDetailError() }
-          )
-    }
-
-  }
-
-  private fun onPostDetailSuccess(postDetail: Post) {
-    postDetail.let {
-      post.value = postDetail
-      postTitle.value = postDetail.title
-      postBody.value = postDetail.body
-    }
-  }
-
-  private fun onPostDetailError() {
-
-    dbSubscription = postDetailRepository.getPostDetailFromDb(post.value!!.id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe {}
-        .doOnTerminate {}
-        .subscribe(
-            { postDetail ->
-              onPostDetailFetchedFromDb(postDetail)
-            }, {
-          onErrorFetchingFromDb()
+    fun loadPostDetail() {
+        if (post.value != null) {
+            networkSubscription = postDetailRepository.getPostDetailFromApi(post.value!!.id).subscribeOn(
+                Schedulers.io()
+            )
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doOnTerminate { hideLoading() }
+                .subscribe(
+                    { postDetail -> onPostDetailSuccess(postDetail) },
+                    { onPostDetailError() }
+                )
         }
-        )
 
-  }
-
-  private fun onPostDetailFetchedFromDb(postDetail: Post) {
-    postDetail.let {
-      post.value = postDetail
-      postTitle.value = postDetail.title
-      postBody.value = postDetail.body
     }
-  }
 
+    private fun onPostDetailSuccess(postDetail: Post) {
 
-  private fun hideLoading() {
-    loadingVisibility.value = View.GONE
-  }
+        post.value = postDetail
+        postTitle.value = postDetail.title
+        postBody.value = postDetail.body
 
-  private fun showLoading() {
-    loadingVisibility.value = View.VISIBLE
-    // errorMessage.value = null
-  }
+    }
 
+    private fun onPostDetailError() {
 
-  private fun onErrorFetchingFromDb() {
-    //errorMessage.value = R.string.post_error
-  }
+        dbSubscription = postDetailRepository.getPostDetailFromDb(post.value!!.id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {}
+            .doOnTerminate {}
+            .subscribe(
+                { postDetail ->
+                    onPostDetailFetchedFromDb(postDetail)
+                }, {
+                    onErrorFetchingFromDb()
+                }
+            )
 
-  fun getPostTitle(): MutableLiveData<String> {
-    return postTitle
-  }
+    }
 
-  fun getPostBody(): MutableLiveData<String> {
-    return postBody
-  }
+    private fun onPostDetailFetchedFromDb(postDetail: Post) {
 
-  override fun onCleared() {
-    super.onCleared()
-    if (::networkSubscription.isInitialized)
-      networkSubscription.dispose()
-    if (::dbSubscription.isInitialized)
-      dbSubscription.dispose()
-  }
+        post.value = postDetail
+        postTitle.value = postDetail.title
+        postBody.value = postDetail.body
+
+    }
+
+    private fun hideLoading() {
+        loadingVisibility.value = View.GONE
+    }
+
+    private fun showLoading() {
+        loadingVisibility.value = View.VISIBLE
+        // errorMessage.value = null
+    }
+
+    private fun onErrorFetchingFromDb() {
+        //errorMessage.value = R.string.post_error
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (::networkSubscription.isInitialized)
+            networkSubscription.dispose()
+        if (::dbSubscription.isInitialized)
+            dbSubscription.dispose()
+    }
 }

@@ -24,7 +24,7 @@ class PostDetailActivity : AppCompatActivity() {
         PostDetailViewModel::class.java)
     binding.viewModel = viewModel
     val post = intent.getParcelableExtra<Post>(INTENT_EXTRA_POST)
-    viewModel.post.value = post;
+    viewModel.post.value = post
     viewModel.loadPostDetail()
   }
 }

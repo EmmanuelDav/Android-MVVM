@@ -26,7 +26,8 @@ class PostDetailViewModel(application: Application) : AndroidViewModel(applicati
   fun loadPostDetail() {
     if (post.value != null) {
       networkSubscription = postDetailRepository.getPostDetailFromApi(post.value!!.id).subscribeOn(
-          Schedulers.io())
+          Schedulers.io()
+      )
           .observeOn(AndroidSchedulers.mainThread())
           .doOnSubscribe { showLoading() }
           .doOnTerminate { hideLoading() }

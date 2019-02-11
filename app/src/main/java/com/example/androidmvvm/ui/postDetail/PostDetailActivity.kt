@@ -5,9 +5,9 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.androidmvvm.R
+import com.example.androidmvvm.constants.INTENT_EXTRA_POST
 import com.example.androidmvvm.databinding.ActivityPostDetailBinding
 import com.example.androidmvvm.model.Post
-import com.example.androidmvvm.constants.INTENT_EXTRA_POST
 import com.example.androidmvvm.utils.ViewModelFactory
 
 class PostDetailActivity : AppCompatActivity() {

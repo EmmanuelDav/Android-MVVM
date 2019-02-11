@@ -23,7 +23,7 @@ class PostDetailViewModel(application: Application) : AndroidViewModel(applicati
   val post: MutableLiveData<Post> = MutableLiveData()
 
 
-  public fun loadPostDetail() {
+  fun loadPostDetail() {
     if (post.value != null) {
       networkSubscription = postDetailRepository.getPostDetailFromApi(post.value!!.id).subscribeOn(
           Schedulers.io())
@@ -38,10 +38,12 @@ class PostDetailViewModel(application: Application) : AndroidViewModel(applicati
 
   }
 
-  private fun onPostDetailSuccess(postDetail: Post?) {
-    post.value = postDetail
-    postTitle.value = postDetail?.title
-    postBody.value = postDetail?.body
+  private fun onPostDetailSuccess(postDetail: Post) {
+    postDetail.let {
+      post.value = postDetail
+      postTitle.value = postDetail.title
+      postBody.value = postDetail.body
+    }
   }
 
   private fun onPostDetailError() {
@@ -62,9 +64,11 @@ class PostDetailViewModel(application: Application) : AndroidViewModel(applicati
   }
 
   private fun onPostDetailFetchedFromDb(postDetail: Post) {
-    post.value = postDetail
-    postTitle.value = postDetail?.title
-    postBody.value = postDetail?.body
+    postDetail.let {
+      post.value = postDetail
+      postTitle.value = postDetail.title
+      postBody.value = postDetail.body
+    }
   }
 
 

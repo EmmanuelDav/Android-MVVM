@@ -1,4 +1,4 @@
-package com.example.androidmvvm.utils.extensions
+package com.example.androidmvvm.extensions
 
 import android.content.ContextWrapper
 import android.support.v7.app.AppCompatActivity

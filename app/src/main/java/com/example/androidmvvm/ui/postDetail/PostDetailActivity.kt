@@ -15,7 +15,6 @@ class PostDetailActivity : AppCompatActivity() {
   private lateinit var binding: ActivityPostDetailBinding
   private lateinit var viewModel: PostDetailViewModel
 
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
